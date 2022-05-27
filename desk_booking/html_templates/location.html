@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content_base_body %}
+
+    <h5>Floors on {{location}}</h5>
+
+    <ul>
+        {% for x in floors %}
+            <li><a href="{% url 'edit_floor' x.id%}">Floor {{x.name}}</a></li>
+        {% endfor %}
+    </ul>
+    
+    <a href="{{location.id}}/add">Add new floor</a>
+
+{% endblock content_base_body %}

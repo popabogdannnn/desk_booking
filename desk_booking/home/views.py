@@ -9,7 +9,10 @@ from .forms import CreateUserForm
 
 @unauthenticated_user
 def home_view(request):
-    return render(request, "home.html", {})
+    if(request.user.is_superuser):
+        return redirect("manager_home")
+    else:
+        return render(request, "employee_home.html", {})
 
 @authenticated_user
 def login_view(request):

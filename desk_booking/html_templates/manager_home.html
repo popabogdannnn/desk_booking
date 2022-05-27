@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content_base_body %}
+
+    <h5>Hello manager <i>{{request.user}}</i></h5>
+
+    <ul>
+        {% for x in location_list %}
+            <li><a href="{% url 'location' x.id%}">{{x}}</a></li>
+        {% endfor %}
+    </ul>
+    
+    <a href="add/">Add new location</a>
+
+{% endblock content_base_body %}

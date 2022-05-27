@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block content_base_body %}
+
+    <h5>Add a new location</h5>
+    <form method="POST" action="">
+        {% csrf_token %}
+        <label for="location_name">Name</label>
+        <input type="text" name="location_name" id="location_name">
+        <br>
+        <label for="location_city">City</label>
+        <input type="text" name="location_city" id="location_city">
+        <br>
+        <label for="location_country">Country</label>
+        <input type="text" name="location_country" id="location_country">
+        <br>
+        <input type="SUBMIT" name="submit" value="submit">
+    </form>
+
+{% endblock content_base_body %}

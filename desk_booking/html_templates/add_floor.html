@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content_base_body %}
+
+    <h5>Add a new location</h5>
+    <form method="POST" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="floor_name">Name</label>
+        <input type="text" name="floor_name" id="floor_name">
+        <br>
+        <label for="floor_map">Map</label>
+        <input type="file" name="floor_map" id="floor_map" accept="image/*">
+        <br>
+        <input type="SUBMIT" name="submit" value="submit">
+    </form>
+
+{% endblock content_base_body %}
