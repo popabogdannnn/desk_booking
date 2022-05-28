@@ -2,8 +2,17 @@
 
 {% block content_base_body %}
 
+    <script src="/static/javascript/edit_floor.js">
+    </script>
+    <script>
+        var image_url = "{{floor.map.url}}";
+        var csrf_token = "{{csrf_token}}";
+    </script>
+    
     <h6>Floor {{floor.name}}</h6>
 
-    <img src="{{floor.map.url}}">
+    <canvas id="floor_map"> </canvas>
+    <br>
+    <button id="update_desks_button">Update</button>
 
 {% endblock content_base_body %}

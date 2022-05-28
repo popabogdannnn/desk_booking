@@ -42,9 +42,12 @@ def location_view(request, location_id):
 
 @manager_user
 def edit_floor_view(request, floor_id):
+    if(request.method == 'POST'):
+        desks = request.body
+        print(desks)
+    
     floor = Floor.objects.get(id = floor_id)
     
-    print(floor.map)
     context = {
         "floor": floor,
     }
@@ -54,12 +57,15 @@ def edit_floor_view(request, floor_id):
 def add_floor_view(request, location_id):
     if(request.method == 'POST'):
         print(request.FILES)
-        map      = request.FILES.get('floor_map')
-        name     = request.POST.get("floor_name")
+        map = None
+        if "floor_map" in request.FILES:
+            map = request.FILES['floor_map']
+        name = request.POST.get("floor_name")
         location = Location.objects.get(id = location_id)
 
-        new_floor = Floor(name = name, map = map.temporary_file_path, parent_location = location)
-        new_floor.save()
+        if(len(name) > 0 and map != None):
+            new_floor = Floor(name = name, map = map, parent_location = location)
+            new_floor.save()
     form = FloorForm()
     context = {
         "form": form

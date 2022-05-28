@@ -6,10 +6,10 @@
     <form method="POST" action="" enctype="multipart/form-data">
         {% csrf_token %}
         <label for="floor_name">Name</label>
-        <input type="text" name="floor_name" id="floor_name">
+        <input type="text" name="floor_name" id="floor_name" required="True">
         <br>
         <label for="floor_map">Map</label>
-        <input type="file" name="floor_map" id="floor_map" accept="image/*">
+        <input type="file" name="floor_map" accept="image/*" required="True">
         <br>
         <input type="SUBMIT" name="submit" value="submit">
     </form>
