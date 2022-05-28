@@ -1,6 +1,6 @@
 from django.forms import all_valid
 from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+from django.shortcuts import redirect, render
 
 import json
 from datetime import datetime
@@ -64,3 +64,16 @@ def book_desk_view(request):
         
     
     return render(request, "book_desk.html", context)
+
+@unauthenticated_user
+def book_desk_handler(request):
+    if request.method == 'POST':
+        data = json.loads(request.body.decode())
+        
+        parent_desk = Desk.objects.get(id = data["desk_id"])
+        first_day = data["first_day"]
+        last_day = data["last_day"]
+        booked_by = request.user
+        booking = Booking(booked_by = booked_by, start_booking = first_day, end_booking = last_day, parent_desk = parent_desk)
+        booking.save()
+        return HttpResponse("E bine")

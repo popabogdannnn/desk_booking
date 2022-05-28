@@ -4,6 +4,8 @@ var array_of_desks = [];
 var keys;
 var index;
 
+var first_day;
+var last_day;
 var width;
 var height;
 var draw;
@@ -78,7 +80,29 @@ function update_page() {
         let ok = false;
         for(let i = 0; i < array_of_desks.length; i++) {
             if(mouse_inside_desk(mouse, array_of_desks[i])) {
-                
+                let xhr = new XMLHttpRequest();
+                let url = window.location.href + "send";
+            
+                xhr.open("POST", url, true);
+
+            
+                xhr.setRequestHeader("Content-Type", "application/json")
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === 4 && xhr.status === 200) {
+                        
+                    }
+                };
+            
+                var data = JSON.stringify({
+                    "first_day":first_day,
+                    "last_day": last_day,
+                    "desk_id": array_of_desks[i][4]
+                });
+            
+                xhr.send(data);
+                location.replace("/");
             }
         }
     }
