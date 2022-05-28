@@ -77,3 +77,18 @@ def book_desk_handler(request):
         booking = Booking(booked_by = booked_by, start_booking = first_day, end_booking = last_day, parent_desk = parent_desk)
         booking.save()
         return HttpResponse("E bine")
+
+
+@unauthenticated_user
+def my_bookings_view(request):
+    if request.method == 'POST':
+        booking_id = request.body.decode()
+        Booking.objects.get(id = booking_id).delete()
+        return HttpResponse("E bine")
+
+
+    bookings = Booking.objects.filter(booked_by = request.user)
+    context = {
+        "bookings": bookings
+    }
+    return render(request, "my_bookings.html", context)
