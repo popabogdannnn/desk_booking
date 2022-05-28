@@ -49,8 +49,20 @@ def edit_floor_view(request, floor_id):
         desks = desks.decode()
         desks = json.loads(desks)
         curr_floor = Floor.objects.get(id = floor_id)
-        Desk.objects.filter(parent_floor = curr_floor).delete()
-        for desk in desks:
+        prev_desks = Desk.objects.filter(parent_floor = curr_floor)
+        
+        prev_desk_list = [
+            [x.left_up_x, x.left_up_y, x.right_down_x, x.right_down_y]
+            for x in prev_desks
+        ]
+
+        for i in range(len(prev_desk_list)):
+            if(prev_desk_list[i] not in desks):
+                prev_desks[i].delete()
+        
+        desks_to_be_added = [desk for desk in desks if desk not in prev_desk_list]
+
+        for desk in desks_to_be_added:
             add_desk = Desk(
                 left_up_x = desk[0],
                 left_up_y = desk[1],

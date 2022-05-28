@@ -1,3 +1,4 @@
+from operator import mod
 from django.db import models
 
 # Create your models here.
@@ -27,3 +28,8 @@ class Desk(models.Model):
     def __str__(self):
         return f"Desk {self.id} {self.parent_floor}"
 
+class Booking(models.Model):
+    parent_desk = models.ForeignKey("Desk", on_delete=models.CASCADE)
+    start_booking = models.DateField()
+    end_booking = models.DateField()
+    
