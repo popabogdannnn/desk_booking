@@ -27,4 +27,5 @@ urlpatterns = [
     path('logout/', logout_user, name = "logout"),
     path('admin/', admin.site.urls),
     path('manager/', include("manager.urls")),
+    path('employee/', include("employee.urls")),
 ] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)
