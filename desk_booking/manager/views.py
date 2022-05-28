@@ -1,8 +1,10 @@
+from django.http import HttpResponse
 from django.shortcuts import render, redirect
 
 from .decorators import manager_user
 from .models import *
 from .forms import FloorForm
+import json
 # Create your views here.
 
 @manager_user
@@ -44,12 +46,33 @@ def location_view(request, location_id):
 def edit_floor_view(request, floor_id):
     if(request.method == 'POST'):
         desks = request.body
-        print(desks)
+        desks = desks.decode()
+        desks = json.loads(desks)
+        curr_floor = Floor.objects.get(id = floor_id)
+        Desk.objects.filter(parent_floor = curr_floor).delete()
+        for desk in desks:
+            add_desk = Desk(
+                left_up_x = desk[0],
+                left_up_y = desk[1],
+                right_down_x = desk[2],
+                right_down_y = desk[3],
+                parent_floor = curr_floor
+            )
+            add_desk.save()
+        
+        return HttpResponse("E bine fra")
+
     
     floor = Floor.objects.get(id = floor_id)
-    
+    desks = Desk.objects.filter(parent_floor = floor)
+
+    desk_list = [
+        [x.left_up_x, x.left_up_y, x.right_down_x, x.right_down_y]
+        for x in desks
+    ]
     context = {
         "floor": floor,
+        "desk_list": desk_list
     }
     return render(request, "edit_floor.html", context)
 

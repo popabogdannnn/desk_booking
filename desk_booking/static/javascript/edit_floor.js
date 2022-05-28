@@ -127,7 +127,7 @@ function init() {
                 }
             };
             
-            var data = JSON.stringify({"email": "hey@mail.com", "password": "101010"});
+            var data = JSON.stringify(array_of_desks);
             
             xhr.send(data);
         })
