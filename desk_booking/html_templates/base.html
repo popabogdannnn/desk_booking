@@ -14,10 +14,11 @@
 <body>
     {% include "navbar.html" %}
 
-    {% block content_base_body %}
+    <div id="centered">
+        {% block content_base_body %}
 
-    {% endblock content_base_body %}    
-        
+        {% endblock content_base_body %}    
+    </div>
 </body>
 
 </html>
