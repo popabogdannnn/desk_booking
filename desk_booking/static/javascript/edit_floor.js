@@ -1,5 +1,3 @@
-
-var array_of_desks = []
 var temp = []
 var width;
 var height;
