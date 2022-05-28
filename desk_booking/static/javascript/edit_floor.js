@@ -16,6 +16,7 @@ function mouse_inside_desk(mouse, desk) {
 }
 
 function draw_desks() {
+    
     draw.clearRect(0, 0, width, height);
     draw.drawImage(background, 0, 0);
     
@@ -27,11 +28,11 @@ function draw_desks() {
                 draw.strokeStyle = 'red';
             }
             else {
-                draw.strokeStyle = 'black';
+                draw.strokeStyle = 'blue';
             }
         }
         else {
-            draw.strokeStyle = 'black';
+            draw.strokeStyle = 'blue';
         }
         draw.rect(desk[0], desk[1], desk[2] - desk[0], desk[3] - desk[1]);
 
@@ -48,10 +49,13 @@ function init() {
         draw = map.getContext('2d');
         
         background.src = image_url;
-        
+        background.onload = function() {
+            width = this.width;
+            height = this.height;
+            map.width = width;
+            map.height = height;
+        }
 
-        width = map.width;
-        height = map.height;
         
 
         setInterval(draw_desks, 30);

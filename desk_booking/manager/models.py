@@ -1,5 +1,6 @@
 from operator import mod
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 class Location(models.Model):
@@ -30,6 +31,6 @@ class Desk(models.Model):
 
 class Booking(models.Model):
     parent_desk = models.ForeignKey("Desk", on_delete=models.CASCADE)
+    booked_by = models.ForeignKey(User, on_delete=models.CASCADE)
     start_booking = models.DateField()
     end_booking = models.DateField()
-    

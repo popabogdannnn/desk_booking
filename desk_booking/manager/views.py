@@ -91,7 +91,7 @@ def edit_floor_view(request, floor_id):
 @manager_user
 def add_floor_view(request, location_id):
     if(request.method == 'POST'):
-        print(request.FILES)
+        #print(request.FILES)
         map = None
         if "floor_map" in request.FILES:
             map = request.FILES['floor_map']
@@ -101,6 +101,7 @@ def add_floor_view(request, location_id):
         if(len(name) > 0 and map != None):
             new_floor = Floor(name = name, map = map, parent_location = location)
             new_floor.save()
+        return redirect("location", location_id)
     form = FloorForm()
     context = {
         "form": form
