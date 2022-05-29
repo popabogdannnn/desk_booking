@@ -3,7 +3,7 @@
 {% block content_base_body %}
 
     <h5>Hello manager <i>{{request.user}}</i></h5>
-
+    <br>
     <ul>
         {% for x in location_list %}
             <li><a href="{% url 'location' x.id%}">{{x}}</a></li>

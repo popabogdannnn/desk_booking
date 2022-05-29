@@ -2,17 +2,20 @@
 
 {% block content_base_body %}
 
-    <script src="/static/javascript/my_bookings.js">
-
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <script src="/static/javascript/statistics.js">
+        
     </script>
-    <script type="module">
-        import * as d3 from "https://cdn.skypack.dev/d3@7";    
-    </script>
-    <script src="/statc/javascript/">
-
+    <script>
+        var csrf_token = "{{csrf_token}}";
     </script>
 
-    <svg class="bar-chart"></svg>
-    {{percentage_last_week}}
+    <div style="padding:5px">
+        <svg id="first_chart"></svg>
+    </div>
+    <div style="padding:5px">
+        <svg id="second_chart"></svg>
+    </div>
+    
 
 {% endblock content_base_body %}

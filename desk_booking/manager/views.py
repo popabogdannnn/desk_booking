@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 
 from .decorators import manager_user
@@ -111,36 +111,43 @@ def add_floor_view(request, location_id):
 
 @manager_user
 def statistics_view(request):
-    all_bookings = Booking.objects.all().order_by("end_booking")
-    
-    location_distribution = {
+    if(request.method == 'FETCH'):
 
-    }
+        all_bookings = Booking.objects.all().order_by("end_booking")
 
-    floor_distribution = {
+        location_distribution = {
 
-    }
+        }
 
-    user_ids = set()
+        floor_distribution = {
 
-    for booking in all_bookings:
-        location_distribution[booking.parent_desk.parent_floor.parent_location.name] = 0
-    for booking in all_bookings:
-        location_distribution[booking.parent_desk.parent_floor.parent_location.name] += 1
-    
-    for booking in all_bookings:
-        floor_distribution[booking.parent_desk.parent_floor.name] = 0
-        now = datetime.now().date()
-        if ((booking.end_booking < now and (now - booking.end_booking).days < 7) or (booking.start_booking < now and (now - booking.start_booking).days < 7)):
-            user_ids.add(booking.booked_by.id)
-    for booking in all_bookings:
-        floor_distribution[booking.parent_desk.parent_floor.name] += 1
+        }
 
-    percentage_last_week = len(user_ids) / User.objects.all().count()
-    
-    context = {
-        "location_distribution": location_distribution,
-        "floor_distribution": floor_distribution,
-        "percentage_last_week": percentage_last_week
-    }
-    return render(request, "statistics.html", context)
+        user_ids = set()
+
+        for booking in all_bookings:
+            location_distribution[booking.parent_desk.parent_floor.parent_location.name] = 0
+        for booking in all_bookings:
+            location_distribution[booking.parent_desk.parent_floor.parent_location.name] += 1
+
+        for booking in all_bookings:
+            floor_distribution["Floor " + booking.parent_desk.parent_floor.name] = 0
+            now = datetime.now().date()
+            end_booking = booking.end_booking
+            start_booking = booking.start_booking
+            if ((end_booking < now and (now - end_booking).days < 7) or (start_booking < now and (now - start_booking).days < 7)):
+                user_ids.add(booking.booked_by.id)
+        for booking in all_bookings:
+            floor_distribution["Floor " + booking.parent_desk.parent_floor.name] += 1
+
+        percentage_last_week = len(user_ids) / User.objects.all().count()
+
+
+        return JsonResponse(json.dumps({
+            "location_distribution": location_distribution,
+            "floor_distribution": floor_distribution,
+            "percentage_last_week": percentage_last_week
+        }), safe=False)
+        
+
+    return render(request, "statistics.html", {})
