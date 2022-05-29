@@ -81,7 +81,7 @@ function update_page() {
         for(let i = 0; i < array_of_desks.length; i++) {
             if(mouse_inside_desk(mouse, array_of_desks[i])) {
                 let xhr = new XMLHttpRequest();
-                let url = window.location.href + "send";
+                let url = window.location.href + "send/";
             
                 xhr.open("POST", url, true);
 

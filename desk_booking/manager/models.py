@@ -34,3 +34,5 @@ class Booking(models.Model):
     booked_by = models.ForeignKey(User, on_delete=models.CASCADE)
     start_booking = models.DateField()
     end_booking = models.DateField()
+    def __str__(self):
+        return str(self.parent_desk) + " " + self.start_booking.strftime("%d/%m/%Y") + " " + self.end_booking.strftime("%d/%m/%Y")

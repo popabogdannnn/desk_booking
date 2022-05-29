@@ -68,8 +68,8 @@ def book_desk_view(request):
 @unauthenticated_user
 def book_desk_handler(request):
     if request.method == 'POST':
+        print("AICI")
         data = json.loads(request.body.decode())
-        
         parent_desk = Desk.objects.get(id = data["desk_id"])
         first_day = data["first_day"]
         last_day = data["last_day"]

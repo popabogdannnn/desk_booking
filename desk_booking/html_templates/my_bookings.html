@@ -10,7 +10,7 @@
     </script>
     <ul id="booking_list">
         {% for booking in bookings %}
-           <li id="{{booking.id}}"><a href="#" onclick="delete_booking({{booking.id}})">{{booking.parent_desk}}</a></li> 
+           <li id="{{booking.id}}"><a href="#" onclick="delete_booking({{booking.id}})">{{booking}}</a></li> 
         {% endfor %}
     </ul>
 
